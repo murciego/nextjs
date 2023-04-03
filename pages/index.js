@@ -1,8 +1,17 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { Canvas } from '@react-three/fiber';
+import { useState } from 'react';
 
 export default function Home() {
+  const [saludo, setSaludo] = useState([]);
+  const fetchTodos = async () => {
+    const response = await fetch('/api/hello');
+    const data = await response.json();
+    console.log(data);
+    setSaludo(data.name);
+  };
+  fetchTodos();
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +20,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://nextjs.org">Next.js ! - {saludo} -</a>
         </h1>
         <Canvas>
           <ambientLight intensity={0.1} />
